@@ -60,7 +60,6 @@ define python::mkvirtualenv (
       exec{ "python_mkvirtualenv_${name}":
         command  => "${boxen::config::home}/env.sh && \
           mkvirtualenv ${mkvenv_proj} ${name} ${mkvenv_syspkg}",
-        provider => 'shell',
         user     => $::boxen_user,
         creates  => $venv_path,
         require  => [File["${boxen::config::envdir}/python_venvwrapper.sh"],
