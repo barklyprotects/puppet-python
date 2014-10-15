@@ -58,10 +58,11 @@ define python::mkvirtualenv (
       }
 
       exec{ "python_mkvirtualenv_${name}":
-        command  => "bash -c 'source ${boxen::config::home}/env.sh; \
-          mkvirtualenv ${mkvenv_proj} ${name} ${mkvenv_syspkg}'",
+        command  => "bash -c 'source ${boxen::config::home}/env.sh;\
+        mkvirtualenv ${mkvenv_proj} ${name} ${mkvenv_syspkg}'",
         user     => $::boxen_user,
         creates  => $venv_path,
+        returns  => 1,
         require  => [File["${boxen::config::envdir}/python_venvwrapper.sh"],
           Class['python::virtualenvwrapper']]
       }
