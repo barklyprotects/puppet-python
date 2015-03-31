@@ -28,17 +28,13 @@ define python::pip (
   $virtualenv,
   $ensure = present,
   $proxy  = false,
-  $package
+  $package = $name
 ) {
   require python
 
   # Parameter validation
   if ! $virtualenv {
     fail('python::pip: virtualenv parameter must not be empty')
-  }
-
-  if ! $package {
-    $package = $name
   }
 
   $proxy_flag = $proxy ? {

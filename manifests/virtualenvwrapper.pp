@@ -10,9 +10,8 @@ class python::virtualenvwrapper {
   $version = '3.7'
 
   # Install virtualenvwrapper
-  python::pip { "virtualenvwrapper==${version}":
+  python::pip {"virtualenvwrapper==${version}":
       ensure     => present,
-      package =>  "virtualenvwrapper==${version}",
       virtualenv => $python::config::global_venv
   }
 
