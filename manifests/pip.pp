@@ -48,14 +48,14 @@ define python::pip (
 
   case $ensure {
     present: {
-      exec { "pip_install_${name}":
+      exec { "pip_install_${virtualenv}-${name}":
         command => "${virtualenv}/bin/pip install ${proxy_flag} ${name}",
         unless  => "${virtualenv}/bin/pip freeze | grep -i -e ${grep_regex}",
       }
     }
 
     default: {
-      exec { "pip_uninstall_${name}":
+      exec { "pip_uninstall_${virtualenv}-${name}":
         command => "echo y | ${virtualenv}/bin/pip uninstall ${proxy_flag} ${name}",
         onlyif  => "${virtualenv}/bin/pip freeze | grep -i -e ${grep_regex}",
       }
