@@ -49,7 +49,7 @@ define python::pip (
 
   case $ensure {
     present: {
-      exec { "pip_install_${virtualenv}-${package}":
+      exec { "pip_install_${package}":
         command => "${virtualenv}/bin/pip install ${proxy_flag} ${name}",
         unless  => "${virtualenv}/bin/pip freeze | grep -i -e ${grep_regex}",
       }
