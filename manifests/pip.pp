@@ -32,6 +32,7 @@ define python::pip (
 ) {
   require python
 
+  $virtualenvtitle = regsubst($virtualenv,'\/','_')
   # Parameter validation
   if ! $virtualenv {
     fail('python::pip: virtualenv parameter must not be empty')
@@ -49,7 +50,7 @@ define python::pip (
 
   case $ensure {
     present: {
-      exec { "pip_install_${package}":
+      exec { "pip_install_${virtualenvtitle}_${package}":
         command => "${virtualenv}/bin/pip install ${proxy_flag} ${name}",
         unless  => "${virtualenv}/bin/pip freeze | grep -i -e ${grep_regex}",
       }
