@@ -27,13 +27,18 @@
 define python::pip (
   $virtualenv,
   $ensure = present,
-  $proxy  = false
+  $proxy  = false,
+  $package
 ) {
   require python
 
   # Parameter validation
   if ! $virtualenv {
     fail('python::pip: virtualenv parameter must not be empty')
+  }
+
+  if ! $package {
+    $package = $name
   }
 
   $proxy_flag = $proxy ? {
@@ -48,14 +53,14 @@ define python::pip (
 
   case $ensure {
     present: {
-      exec { "pip_install_${virtualenv}-${name}":
+      exec { "pip_install_${virtualenv}-${package}":
         command => "${virtualenv}/bin/pip install ${proxy_flag} ${name}",
         unless  => "${virtualenv}/bin/pip freeze | grep -i -e ${grep_regex}",
       }
     }
 
     default: {
-      exec { "pip_uninstall_${virtualenv}-${name}":
+      exec { "pip_uninstall_${virtualenv}-${package}":
         command => "echo y | ${virtualenv}/bin/pip uninstall ${proxy_flag} ${name}",
         onlyif  => "${virtualenv}/bin/pip freeze | grep -i -e ${grep_regex}",
       }
