@@ -3,9 +3,9 @@ require "formula"
 class Python < Formula
   homepage "http://www.python.org"
   head "http://hg.python.org/cpython", :using => :hg, :branch => "2.7"
-  url "http://www.python.org/ftp/python/2.7.8/Python-2.7.8.tgz"
-  sha1 "511960dd78451a06c9df76509635aeec05b2051a"
-  version '2.7.8-boxen1'
+  url "http://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz"
+  sha1 "d7547558fd673bd9d38e2108c6b42521"
+  version '2.7.10-boxen1'
 
   bottle do
     revision 2
@@ -32,13 +32,13 @@ class Python < Formula
   skip_clean "bin/easy_install", "bin/easy_install-2.7"
 
   resource "setuptools" do
-    url "https://pypi.python.org/packages/source/s/setuptools/setuptools-5.4.2.tar.gz"
-    sha1 "a681ba56c30c0eb66528215842d3e3fcb5157614"
+    url "https://pypi.python.org/packages/source/s/setuptools/setuptools-18.2.tar.gz"
+    md5 "52b4e48939ef311d7204f8fe940764f4"
   end
 
   resource "pip" do
-    url "https://pypi.python.org/packages/source/p/pip/pip-1.5.6.tar.gz"
-    sha1 "e6cd9e6f2fd8d28c9976313632ef8aa8ac31249e"
+    url "https://pypi.python.org/packages/source/p/pip/pip-7.1.2.tar.gz"
+    md5 "3823d2343d9f3aaab21cf9c917710196"
   end
 
   # Patch for pyport.h macro issue
@@ -189,7 +189,7 @@ class Python < Formula
 
     # When building from source, these symlinks will not exist, since
     # post_install happens after linking.
-    %w[pip pip2 pip2.7 easy_install easy_install-2.7].each do |e|
+    %w[pip easy_install].each do |e|
       (HOMEBREW_PREFIX/"bin").install_symlink bin/e
     end
 
